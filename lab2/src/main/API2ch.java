@@ -7,14 +7,19 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 
 public class API2ch {
+    private final Client2ch client;
+
+    public API2ch(Client2ch client) {
+        this.client = client;
+    }
     private static final ObjectMapper deserializer = new ObjectMapper()
             .configure(
                     DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,
                     false
             );
 
-    public static Board[] getBoards() throws IOException {
-        final String content = Client2ch.fetchBoards();
+    public Board[] getBoards() throws IOException {
+        final String content = client.fetchBoards();
 
         try {
             return deserializer.readValue(content, Board[].class);
@@ -23,8 +28,8 @@ public class API2ch {
         }
     }
 
-    public static Thread[] getThreadsByBoardId(final String id) throws IOException {
-        final String content = Client2ch.fetchThread(id);
+    public Thread[] getThreadsByBoardId(final String id) throws IOException {
+        final String content = client.fetchBoardWithThreads(id);
 
         try {
             return deserializer.readValue(content, Board.class).getThreads();

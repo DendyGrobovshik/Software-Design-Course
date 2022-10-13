@@ -6,10 +6,13 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        final String boardId = readBoardId();
+        final Client2ch client2ch = new Client2ch();
+        final API2ch api2ch = new API2ch(client2ch);
+
+        final String boardId = readBoardId(api2ch);
         final int period = readPeriod();
 
-        final Thread[] threads = API2ch.getThreadsByBoardId(boardId);
+        final Thread[] threads = api2ch.getThreadsByBoardId(boardId);
 
         final int[] distribution = Stats2ch.threadDistributionByHour(threads, period);
 
@@ -17,7 +20,7 @@ public class Main {
         System.out.println(Arrays.toString(distribution));
     }
 
-    private static String readBoardId() throws IOException {
+    private static String readBoardId(API2ch api2ch) throws IOException {
         final Scanner in = new Scanner(System.in);
 
         System.out.println("Popular boards: \"b\", \"po\", \"news\"");
@@ -25,7 +28,7 @@ public class Main {
         final String needShowBoards = in.nextLine();
 
         if (needShowBoards.trim().equalsIgnoreCase("yes")) {
-            final Board[] boards = API2ch.getBoards();
+            final Board[] boards = api2ch.getBoards();
 
             for (final Board board : boards) {
                 System.out.println(

@@ -9,14 +9,27 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class Client2ch {
-    private static final URL BOARDS_URL = createURL("https://2ch.hk/api/mobile/v2/boards");
+    private static final String DEFAULT_HOST = "https://2ch.hk";
 
-    public static String fetchBoards() throws IOException {
+    private final String host;
+    private final URL BOARDS_URL;
+
+    public Client2ch(String host) {
+        this.host = host;
+
+        this.BOARDS_URL = createURL(host + "/api/mobile/v2/boards");
+    }
+
+    public Client2ch() {
+        this(DEFAULT_HOST);
+    }
+
+    public String fetchBoards() throws IOException {
         return fetch(BOARDS_URL);
     }
 
-    public static String fetchThread(final String id) throws IOException {
-        final String urlString = String.format("https://2ch.hk/%s/catalog_num.json", id);
+    public String fetchBoardWithThreads(final String id) throws IOException {
+        final String urlString = String.format("%s/%s/catalog_num.json", host, id);
         final URL url = createURL(urlString);
         return fetch(url);
     }
