@@ -11,7 +11,7 @@ import java.io.IOException;
  * @author akirakozov
  */
 public class AddProductServlet extends HttpServlet {
-    private DataBaseConnection connection;
+    private final DataBaseConnection connection;
 
     public AddProductServlet(DataBaseConnection connection) {
         super();
