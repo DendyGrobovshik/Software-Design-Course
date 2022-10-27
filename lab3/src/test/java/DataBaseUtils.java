@@ -29,6 +29,14 @@ public class DataBaseUtils {
         return executeQueryAndFormatForHTML(sql, header, appendInt);
     }
 
+    public static String getAllProductsFormattedForHTML() throws SQLException {
+        String sql = "SELECT NAME, PRICE "
+                + "FROM PRODUCT "
+                + "WHERE TRUE";
+
+        return executeQueryAndFormatForHTML(sql, "", appendNameAndPrice);
+    }
+
     public static int getNumberOfProductsByName(String name) throws SQLException {
         try (Connection c = DriverManager.getConnection("jdbc:sqlite:test.db")) {
             String sql = "SELECT COUNT(*) as COUNT "
@@ -44,29 +52,29 @@ public class DataBaseUtils {
         }
     }
 
-    public static String getAllProductsFormattedForHTML() throws SQLException {
-        try (Connection c = DriverManager.getConnection("jdbc:sqlite:test.db")) {
-            String sql = "SELECT NAME, PRICE "
-                    + "FROM PRODUCT "
-                    + "WHERE TRUE";
-            Statement stmt = c.createStatement();
-            ResultSet rs = stmt.executeQuery(sql);
-
-            StringBuilder sb = new StringBuilder();
-            sb.append("<html><body>\n");
-
-            while (rs.next()) {
-                String  name = rs.getString("name");
-                int price  = rs.getInt("price");
-                sb.append(name + "\t" + price + "</br>\n");
-            }
-            sb.append("</body></html>\n");
-
-            stmt.close();
-
-            return sb.toString();
-        }
-    }
+//    public static String getAllProductsFormattedForHTML() throws SQLException {
+//        try (Connection c = DriverManager.getConnection("jdbc:sqlite:test.db")) {
+//            String sql = "SELECT NAME, PRICE "
+//                    + "FROM PRODUCT "
+//                    + "WHERE TRUE";
+//            Statement stmt = c.createStatement();
+//            ResultSet rs = stmt.executeQuery(sql);
+//
+//            StringBuilder sb = new StringBuilder();
+//            sb.append("<html><body>\n");
+//
+//            while (rs.next()) {
+//                String  name = rs.getString("name");
+//                int price  = rs.getInt("price");
+//                sb.append(name + "\t" + price + "</br>\n");
+//            }
+//            sb.append("</body></html>\n");
+//
+//            stmt.close();
+//
+//            return sb.toString();
+//        }
+//    }
 
     public static String executeQueryAndFormatForHTML(String sql, String header, ResultSetHandler rsHandler) throws SQLException {
         try (Connection c = DriverManager.getConnection("jdbc:sqlite:test.db")) {

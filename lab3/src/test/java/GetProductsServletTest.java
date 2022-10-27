@@ -26,7 +26,6 @@ public class GetProductsServletTest {
         }
     }
 
-
     @BeforeEach
     void createResponseMock() throws IOException {
         response = mock(HttpServletResponse.class);
