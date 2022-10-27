@@ -1,5 +1,6 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ru.akirakozov.sd.refactoring.db.DataBaseConnection;
 import ru.akirakozov.sd.refactoring.servlet.QueryServlet;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +19,9 @@ public class QueryServletTest {
     private StringWriter responseContent;
 
     private static class QueryServletOpen extends QueryServlet {
+        public QueryServletOpen() {
+            super(new DataBaseConnection("jdbc:sqlite:test.db"));
+        }
         @Override
         public void doGet(HttpServletRequest request,
                           HttpServletResponse response) throws IOException {
