@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>TODO</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<h1>LIST OF TODOS: </h1>
+
+<h2>Create new list</h2>
+<form th:object="${newList}" method="POST" action="/createList">
+    <p>List name: <input type="text" th:field="*{name}"/></p>
+    <p><input type="submit" value="Create list"/></p>
+</form>
+
+
+<h2>Todo Lists:</h2>
+<table>
+    <th:block th:each="list : ${lists}">
+        <tr>
+            <td style="display: flex;align-items: center;">
+                <form th:action="'/tasks?listId=' + ${list.getId()}" method="GET">
+                    <input type="submit" th:value="${list.getName()}">
+                    <input type="hidden" name="listId" th:value="${list.getId()}">
+                </form>
+                <form action="/removeList" method="POST">
+                    <input type="submit" value="Remove">
+                    <input type="hidden" name="listId" th:value="${list.getId()}">
+                </form>
+            </td>
+        </tr>
+    </th:block>
+</table>
+</body>
+</html>
