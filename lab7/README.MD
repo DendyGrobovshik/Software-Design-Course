@@ -14,8 +14,7 @@
 Указания:
 - Для java можно использовать spring aop или aspectJ
 - Можно использовать и другие AOP фреймворки (в том числе для других языков)
-- Примеры из лекции можно посмотреть тут: https://github.com/akirakozov/software-
-design/tree/master/java/aop
+- Примеры из лекции можно посмотреть тут: https://github.com/akirakozov/software-design/tree/master/java/aop
 
 Баллы:
 - самый простой вариант со spring-aop (8 баллов)
